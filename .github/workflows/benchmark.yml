@@ -1,0 +1,25 @@
+name: Benchmarks
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  benchmark:
+    name: Run Benchmarks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Stage results (base version)
+        run: |
+          mkdir -p benchmark-results
+          echo "1" > benchmark-results/pr-number.txt
+          echo "benchmark report produced by the BASE workflow definition" > benchmark-results/bench_report.md
+      - name: Upload results
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: benchmark-results
+          path: benchmark-results/
+          retention-days: 30
